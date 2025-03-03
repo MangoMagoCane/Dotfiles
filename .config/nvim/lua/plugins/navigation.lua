@@ -22,6 +22,27 @@ local function fileExtension(path)
   end
 end
 
+local function order_numer(str_a, str_b)
+  for i = 1, math.min(#str_a, #str_b) do
+    local a_sub = str_a:sub(i)
+    local b_sub = str_b:sub(i)
+    local a_c = a_sub:sub(1, 1)
+    local b_c = b_sub:sub(1, 1)
+
+    if type(tonumber(a_c)) == "number" and type(tonumber(b_c)) == "number" then
+      local a_num = tonumber(a_sub:match("^[0-9]+"))
+      local b_num = tonumber(b_sub:match("^[0-9]+"))
+
+      if a_num ~= b_num then
+        return a_num < b_num
+      end
+    elseif a_c ~= b_c then
+      return a_sub < b_sub
+    end
+  end
+  return str_a < str_b
+end
+
 local function natural_cmp(a, b)
   -- local f = io.open("foo.txt", "a")
   -- if f == nil then
@@ -74,36 +95,11 @@ local function natural_cmp(a, b)
     return true
   end
 
-  if a_ext == "" and b_ext ~= "" then
-    return false
-  end
-  if b_ext == "" and a_ext ~= "" then
-    return true
-  end
+  a_name = a_ext .. " " .. a_name
+  b_name = b_ext .. " " .. b_name
 
-  if a_ext ~= b_ext then
-    return a_ext < b_ext
-  end
-  if a_name == b_name then
-    return false
-  end
-
-  for i = 1, math.max(#a_name, #b_name) do
-    local a_sub = a_name:sub(i)
-    local b_sub = b_name:sub(i)
-
-    if type(tonumber(a_sub:sub(1, 1))) == "number" and type(tonumber(b_sub:sub(1, 1))) == "number" then
-      local a_num = tonumber(a_sub:match("^[0-9]+"))
-      local b_num = tonumber(b_sub:match("^[0-9]+"))
-
-      if a_num ~= b_num then
-        return a_num < b_num
-      end
-    elseif a_sub:sub(1, 1) ~= b_sub.sub(1, 1) then
-      return a_sub < b_sub
-    end
-  end
   -- f:close()
+  return order_numer(a_name, b_name)
 end
 
 return {
