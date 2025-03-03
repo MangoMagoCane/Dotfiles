@@ -44,33 +44,14 @@ local function order_numer(str_a, str_b)
 end
 
 local function natural_cmp(a, b)
-  -- local f = io.open("foo.txt", "a")
-  -- if f == nil then
-  --   print("foo.text open err")
-  --   return false
-  -- end
   if a.type == nil or a.path == nil then
     return false
   end
   if b.type == nil or b.path == nil then
     return true
   end
-  -- f:write("foo:\n")
-  -- for k, v in pairs(a) do
-  --   f:write("--" .. k .. ": " .. tostring(v) .. "\n")
-  --   if type(v) == "table" then
-  --     for k2, v2 in pairs(a) do
-  --       f:write("----" .. k2 .. ": " .. tostring(v2) .. "\n")
-  --     end
-  --   end
-  -- end
-  -- f:write("--ID:" .. tostring(a) .. "\n")
   local a_name, a_ext = fileExtension(a.path:lower())
   local b_name, b_ext = fileExtension(b.path:lower())
-
-  -- f:write("a: " .. a_name .. " " .. a_ext .. "\n")
-  -- f:write("b: " .. b_name .. " " .. b_ext .. "\n")
-  -- f:write("len: " .. #a_name .. " " .. #b_name .. " " .. math.max(#a_name, #b_name) .. "\n")
 
   if a.type == "directory" and b.type ~= "directory" then
     return true
@@ -98,7 +79,6 @@ local function natural_cmp(a, b)
   a_name = a_ext .. " " .. a_name
   b_name = b_ext .. " " .. b_name
 
-  -- f:close()
   return order_numer(a_name, b_name)
 end
 
