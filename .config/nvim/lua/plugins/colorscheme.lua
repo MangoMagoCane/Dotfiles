@@ -1,15 +1,9 @@
 return {
   {
-    "lourenci/github-colors",
-    name = "github-colors",
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
   },
   {
     "ellisonleao/gruvbox.nvim",
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "gruvbox",
-    },
   },
 }
